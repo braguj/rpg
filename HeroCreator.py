@@ -1,15 +1,15 @@
 class Hero:
 
     listOfHeroes = {}
-    classes = ['Druid', 'Mage', 'Warrior', 'Soldier', 'King']
+    classes = ['Druid', 'Mage', 'Warrior', 'Soldier', 'King', 'Human']
 
     def __init__(self):
         heroName, heroClass = self.setUpHero()
-        self.heroName = heroName
-        self.heroClass = heroClass
-        self.heroHealth = 100
-        self.heroCharisma = 50
-        Hero.listOfHeroes[self.heroName] = {"Class": self.heroClass}
+        self._heroName = heroName
+        self._heroClass = heroClass
+        self.__heroHealth = 100
+        self.__heroCharisma = 50
+        Hero.listOfHeroes[self._heroName] = {"Class": self._heroClass}
 
     @classmethod
     def setUpHero(cls) -> list:
@@ -18,20 +18,19 @@ class Hero:
             print("\nHero without name.\n")
             heroName = input("Set up your hero name: ").title()
         print("Classes avaliable:\n")
-        #for heroInformations in cls.listOfHeroes.values():
-        #    if cls.classes in heroInformations["Class"]:
-        #        print(f" - {heroInformations["Class"]} (Unvaliable)")
-        #    else:
-        #        print(f" - {heroInformations["Class"]}")
+        for classes in cls.classes:
+            print(f" - {classes}")
         heroClass = input(f"\n{heroName}, set up your hero class: ").title()
-        if not heroClass:
-            return heroName, 'Undefined'
-        return heroName, heroClass
+        if heroClass == 'Human':
+            return heroName, heroClass
+        elif not heroClass:
+            return heroName, 'Human'
+        elif heroClass != 'Human':
+            cls.classes.remove(heroClass)
+            return heroName, heroClass
+        else:
+            return heroName, 'Human'
 
-    def __call__(self):
-        print(f"Hero name: {self.heroName}\nHero class: {self.heroClass}")
-
-Hero()()
-print(Hero.listOfHeroes)
-Hero()()
-print(Hero.listOfHeroes)
+p1 = Hero()
+p1.__heroClass = 'Druid'
+print(p1.__heroClass)
